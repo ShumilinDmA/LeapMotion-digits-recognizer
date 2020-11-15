@@ -57,7 +57,7 @@ class NeuralNet:
             output = self.Dense2.forward(output)
             output = self.Softmax.forward(output)
             prediction = np.argmax(output, axis=1)  # Take max probability
-            return prediction
+            return output, prediction
 
     def backward_step(self, pred, y_ohe, lr, reg):
         """

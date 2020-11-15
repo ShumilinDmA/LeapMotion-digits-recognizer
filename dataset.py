@@ -27,18 +27,34 @@ def files_to_pictures(file):
     return 'Dataset is done'
 
 
-def inference_file_to_picture(file):
+def inference_file_to_picture(file_name):
     """
     Transform path of file to picture in EVAL_DIR directory
-    :param file: String of path to file
+    :param file_name: String of path to file
     :return: Directory to file in .png format
     """
     scaler = StandardScaler()
-    data = genfromtxt(file, delimiter=',')  # Load data
+    data = genfromtxt(file_name, delimiter=',')  # Load data
     data_scaled = scaler.fit_transform(data)  # Scale data
-    fig = plt.figure(figsize=(0.5, 0.5))
+    fig = plt.figure(figsize=(0.36, 0.36))
     plt.plot(data_scaled[:, 0], data_scaled[:, 1], linewidth=2)  # Plot data
-    file_name = EVAL_DIR + file.split('/')[-1].split('.')[0]  # Create new name
+    file_name = EVAL_DIR + file_name.split('/')[-1].split('.')[0]  # Create new name
+    fig.savefig(file_name)  # Save figure
+    plt.close(fig)
+    return file_name + '.png'
+
+
+def data_to_picture(data):
+    """
+    Transform data to picture in EVAL_DIR directory
+    :param data: Numpy matrix of data
+    :return:
+    """
+    scaler = StandardScaler()
+    data_scaled = scaler.fit_transform(data)  # Scale data
+    fig = plt.figure(figsize=(0.36, 0.36))
+    plt.plot(data_scaled[:, 0], data_scaled[:, 1], linewidth=2)  # Plot data
+    file_name = EVAL_DIR + 'inference_image'  # Create new name
     fig.savefig(file_name)  # Save figure
     plt.close(fig)
     return file_name + '.png'
